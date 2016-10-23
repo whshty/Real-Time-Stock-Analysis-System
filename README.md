@@ -1,5 +1,53 @@
 ## Real-Time-Stock-Analysis-System
-#### Name of docker-machine : bigdata
+
+Prerequisites.
+
+- Python
+- Docker Toolbox 
+- zookeepr
+- Kafka
+- Redis
+- Spark
+
+#### Create a docker machine called bigdata
+#### Name of my docker-machine : bigdata
+
+Check the list of docker machine
+
+```
+$ docker-machine ls
+```
+
+Start docker machine 
+
+```
+$ docker-machine start bigdata
+```
+
+Steps 1: Fetch data from stock (terminal 1)
+
+```
+$ docker rm -f $(docker ps -a -q)
+
+$ docker ps
+
+$ eval $(docker-machine env bigdata)
+
+$ ./local-setup.sh bigdata
+
+
+```
+
+Step 2: Start streaming processor (terminal 2 )
+
+```
+$ spark-submit --jars spark-streaming-kafka-0-8-assembly_2.11-2.0.0.jar stream-processing.py stock-analyzer average-stock-price 192.168.99.100:9092
+
+
+
+```
+
+
 Start a Zookeeper Container:
 
 ```
