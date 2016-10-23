@@ -35,6 +35,8 @@ $ eval $(docker-machine env bigdata)
 
 $ ./local-setup.sh bigdata
 
+$ python simple-data-producer.py AAPL stock-analyzer 192.168.99.100:9092
+
 
 ```
 
