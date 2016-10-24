@@ -1,3 +1,6 @@
+#1. read from kafka, kafka broker, kafka topic 
+#2. write back to kafka , kafka broker, new kafka topic 
+
 import atexit
 import logging
 import json
