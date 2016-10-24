@@ -42,18 +42,25 @@ $ python simple-data-producer.py AAPL stock-analyzer 192.168.99.100:9092
 
 ```
 
-Step 2: Start streaming processor (terminal 2 )
+Step 2: Start streaming processor (terminal 2)
 
 ```
 $ spark-submit --jars spark-streaming-kafka-0-8-assembly_2.11-2.0.0.jar stream-processing.py stock-analyzer average-stock-price 192.168.99.100:9092
 ```
 
-Step 3: Start redis producer (terminal 3 )
+Step 3: Start redis producer (terminal 3)
 
 ```
 $ python redis-publisher.py average-stock-price 192.168.99.100:9092 average-stock-price 192.168.99.100 6379
 ```
 
+Step 4: Node.js & Visualization (terminal 4)
+
+```
+$ node index.js --port=3000 --redis_host=192.168.99.100 --redis_port=6379 --subscribe_topic=average-stock-price
+```
+
+### Other Information 
 
 Start a Zookeeper Container:
 
