@@ -27,16 +27,15 @@ $ docker-machine start bigdata
 Steps 1: Fetch data from stock (terminal 1)
 
 ```
+$ eval $(docker-machine env bigdata)
 $ docker rm -f $(docker ps -a -q)
 
 $ docker ps
 
-$ eval $(docker-machine env bigdata)
 
 $ ./local-setup.sh bigdata
 
 $ python simple-data-producer.py AAPL stock-analyzer 192.168.99.100:9092
-
 
 ```
 
@@ -44,6 +43,13 @@ Step 2: Start streaming processor (terminal 2 )
 
 ```
 $ spark-submit --jars spark-streaming-kafka-0-8-assembly_2.11-2.0.0.jar stream-processing.py stock-analyzer average-stock-price 192.168.99.100:9092
+
+```
+
+Step 3: Start redis producer (terminal 3 )
+
+```
+$ python redis-publisher.py average-stock-price 192.168.99.100:9092 average-stock-price 192.168.99.100 6379
 
 ```
 
