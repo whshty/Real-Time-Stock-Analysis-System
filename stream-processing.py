@@ -7,8 +7,11 @@ import json
 import sys
 import time
 
+# write back to kafka 
 from kafka import KafkaProducer
 from kafka.errors import KafkaError, KafkaTimeoutError
+
+# import spark 
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
 from pyspark.streaming.kafka import KafkaUtils
@@ -70,13 +73,21 @@ if __name__ == '__main__':
         exit(1)
 
     # - create SparkContext and StreamingContext
+    # - setup connection to spark cluster
+    ## spark run on local
+    ### 2 : number of thread
     sc = SparkContext("local[2]", "StockAveragePrice")
+    #logging
     sc.setLogLevel('ERROR')
+    ### every 5 second
     ssc = StreamingContext(sc, 5)
 
+    # ignore the name of index 1 (which is steaming processing )
     topic, target_topic, brokers = sys.argv[1:]
 
     # - instantiate a kafka stream for processing
+    # - create a data stream from spark
+    ### - stream data - the source of data - the location of Kafka
     directKafkaStream = KafkaUtils.createDirectStream(ssc, [topic], {'metadata.broker.list': brokers})
     directKafkaStream.foreachRDD(process)
 
@@ -88,5 +99,6 @@ if __name__ == '__main__':
     # - setup proper shutdown hook
     atexit.register(shutdown_hook, kafka_producer)
 
+    # - start data streaming
     ssc.start()
     ssc.awaitTermination()
