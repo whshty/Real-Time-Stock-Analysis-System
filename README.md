@@ -1,6 +1,6 @@
 ## Real-Time-Stock-Analysis-System
 
-Prerequisites.
+Prerequisites for backend.
 
 - Python
 - Docker Toolbox 
@@ -9,7 +9,14 @@ Prerequisites.
 - Redis
 - Spark
 
-#### Create a docker machine called bigdata
+Prerequisites for frontend.
+
+- socket.io
+- express
+- minimist
+- smoothie
+
+#### Create a docker machine called "bigdata"
 #### Name of my docker-machine : bigdata
 
 Check the list of docker machine
@@ -31,7 +38,6 @@ $ eval $(docker-machine env bigdata)
 $ docker rm -f $(docker ps -a -q)
 $ docker ps
 $ ./local-setup.sh bigdata
-
 $ python simple-data-producer.py AAPL stock-analyzer 192.168.99.100:9092
 
 ```
@@ -46,7 +52,6 @@ Step 3: Start redis producer (terminal 3 )
 
 ```
 $ python redis-publisher.py average-stock-price 192.168.99.100:9092 average-stock-price 192.168.99.100 6379
-
 ```
 
 
