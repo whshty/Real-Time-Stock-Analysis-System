@@ -4,7 +4,7 @@ Prerequisites for backend.
 
 - Python
 - Docker Toolbox 
-- zookeepr
+- zookeeper
 - Kafka
 - Redis
 - Spark
